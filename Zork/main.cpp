@@ -7,8 +7,10 @@
 using namespace std;
 
 #define _OFF "\033[0m"
-#define BLUE_ "\033[1;36m"
+#define BLUE_ "\033[1;34m"
+#define GREEN_ "\033[0;32m"
 #define RED_ "\033[0;31m"
+#define YELLOW_ "\033[0;33m"
 
 int main() {
 
@@ -17,7 +19,7 @@ int main() {
 	vector<string> args;
 	args.reserve(10);
 
-	cout << BLUE_ "Welcome to Teal Mesa!" _OFF << endl;
+	cout << BLUE_ "Welcome to Blue Mesa!" _OFF << endl;
 	cout << "--------------------" << endl;
 
 	args.push_back("look");
@@ -33,7 +35,7 @@ int main() {
 					cout << '\b';
 				}
 			}
-			else if (key != '\r') { // return
+			else if (key != '\r') { // not return
 				player_input += key;
 				cout << key;
 			}
@@ -42,6 +44,8 @@ int main() {
 
 		if (args.size() > 0 && Same(args[0], "quit")) break;
 
+		if (args.size() > 0) cout << endl << endl << "Sorry, I do not understand your command." << endl;
+
 		if (args.size() > 0) {
 			args.clear();
 			player_input = "";
@@ -49,6 +53,6 @@ int main() {
 		}
 	}
 
-	cout << endl << endl << "Thank you for playing, Bye!" << endl;
+	cout << endl << endl << BLUE_ "Thank you for playing, Bye!" _OFF << endl;
 	return 0;
 }
