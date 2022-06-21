@@ -7,12 +7,6 @@
 
 using namespace std;
 
-#define _OFF "\033[0m"
-#define BLUE_ "\033[1;34m"
-#define GREEN_ "\033[0;32m"
-#define RED_ "\033[0;31m"
-#define YELLOW_ "\033[0;33m"
-
 int main() {
 
 	char key;
