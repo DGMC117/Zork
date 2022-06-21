@@ -3,12 +3,17 @@
 
 #include "entity.h"
 
+class Exit;
+class Item;
+
 class Room : public Entity {
 public:
 	Room(const string& name, const string& description);
 	~Room();
 
 	void Look() const;
+
+	Exit* GetExit(const string& direction) const;
 
 public:
 

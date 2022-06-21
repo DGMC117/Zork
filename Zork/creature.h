@@ -18,6 +18,13 @@ public:
 	bool PlayerInRoom() const;
 	bool IsAlive() const;
 
+	virtual bool Go(const vector<string>& args);
+	virtual void Look(const vector<string>& args) const;
+	virtual bool Take(const vector<string>& args);
+	virtual bool Drop(const vector<string>& args);
+	virtual void Inventory() const;
+	virtual void Tick();
+
 public:
 	int hit_points;
 };
