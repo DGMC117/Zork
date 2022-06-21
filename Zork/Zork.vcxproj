@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="entity.cpp" />
     <ClCompile Include="globals.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="world.cpp" />
@@ -147,6 +148,7 @@
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="entity.h" />
     <ClInclude Include="globals.h" />
     <ClInclude Include="world.h" />
   </ItemGroup>
