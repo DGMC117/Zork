@@ -3,6 +3,7 @@
 #include <vector>
 #include <conio.h>
 #include "globals.h"
+#include "world.h"
 
 using namespace std;
 
@@ -21,6 +22,8 @@ int main() {
 
 	cout << BLUE_ "Welcome to Blue Mesa!" _OFF << endl;
 	cout << "--------------------" << endl;
+
+	World my_world;
 
 	args.push_back("look");
 
@@ -44,7 +47,7 @@ int main() {
 
 		if (args.size() > 0 && Same(args[0], "quit")) break;
 
-		if (args.size() > 0) cout << endl << endl << "Sorry, I do not understand your command." << endl;
+		if (my_world.Tick(args) == false) cout << endl << endl << "Sorry, I do not understand your command." << endl;
 
 		if (args.size() > 0) {
 			args.clear();
