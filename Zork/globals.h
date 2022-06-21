@@ -14,5 +14,6 @@ using namespace std;
 
 bool Same(const string& a, const string& b);
 void Tokenize(const string& line, vector<string>& args);
+int Roll(int min, int max);
 
 #endif //__Globals__

@@ -15,3 +15,7 @@ void Tokenize(const string& line, vector<string>& args) {
 		args.push_back(string(begin, str));
 	} while (0 != *str++);
 }
+
+int Roll(int min, int max) {
+	return (max > 0) ? min + (rand() % (max - min)) : 0;
+}
