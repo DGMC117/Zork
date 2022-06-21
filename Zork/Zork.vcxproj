@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="entity.cpp" />
+    <ClCompile Include="exit.cpp" />
     <ClCompile Include="globals.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="room.cpp" />
@@ -150,6 +151,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="entity.h" />
+    <ClInclude Include="exit.h" />
     <ClInclude Include="globals.h" />
     <ClInclude Include="room.h" />
     <ClInclude Include="world.h" />
