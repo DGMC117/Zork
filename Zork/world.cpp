@@ -50,6 +50,24 @@ World::World() {
 	entities.push_back(hallway_to_engineering);
 	entities.push_back(engineering_to_reactor);
 
+	// Items
+	Item* glowdust = new Item("Glowdust", "A strange yellow-ish dust that generates light.", recovery_room);
+	Item* machine = new Item("Machine", "A last generation recovery machine built to cure wounds.", recovery_room);
+	Item* dagger = new Item("Dagger", "A small but sharp dagger. It has a few holes in its blade to make it lighter.", recovery_room);
+	Item* card = new Item("Card", "A playing card for some strange game. The card's name seems to be 'Lightning Bolt'.", laboratory);
+	Item* poster = new Item("Poster", "A poster with a simple diagram depicting a flame, a water drop and... a lightbulb?.", laboratory);
+	Item* burner = new Item("Burner", "A standard-looking burner. The scientists here use them to make experiments.", laboratory);
+	Item* box = new Item("Box", "A cardboard box. It may have something inside of it.", hallway);
+	Item* vibranium = new Item("Vibranium", "A vibranium ingot. This is the strongest metal in the multi-verse! Wait, the what?", box);
+	Item* frame = new Item("Frame", "A cube-shaped metal frame. Looks like a component of some device.", assembly_room);
+	Item* computer = new Item("Computer", "A computer, used by the staff. You see there is an open email:\n\n    Hey Sisay,\n\n    Did you see that the number 2 looks like a duck?\n    I love ducks! Look, here are four ducks! 2222\n    From now on two is my favourite number, and I will use it for EVERYTHING!\n\n    Jhoira, from Engineering.\n\n...What a strange individual.", assembly_room);
+	Item* forge = new Item("Forge", "A huge forge that can shape any metal into any form. Maybe I could find a use for this?", assembly_room);
+	Item* candybar = new Item("Candybar", "A chocolate candybar. Looks yummy.", engineering_room);
+	Item* biochip = new Item("Biochip", "A powerful little device. But what is it for?", engineering_room);
+	Item* battery = new Item("Battery", "This battery looks as it contained an entire galaxy inside, despite being so small. There is a small printing on one side that says 'Orion'.", reactor_room);
+	Item* bottle = new Item("Bottle", "A glass bottle that contains a strange liquid. You feel as it was water, but it looks akward.", reactor_room);
+	Item* cable = new Item("Cable", "A very big cable, the size of an arm. it has yellow stripes.", reactor_room);
+
 	// Player
 	player = new Player("Cloud", "You are a soldier assigned to protect these installations with your life.", recovery_room);
 	player->hit_points = 20;
@@ -123,6 +141,21 @@ bool World::ParseCommand(vector<string>& args) {
 		}
 		else if (Same(args[0], "go")) {
 			player->Go(args);
+		}
+		else if (Same(args[0], "take") || Same(args[0], "pick")) {
+			player->Take(args);
+		}
+		else if (Same(args[0], "drop") || Same(args[0], "put")) {
+			player->Drop(args);
+		}
+		else ret = false;
+		break;
+	case 4:
+		if (Same(args[0], "take") || Same(args[0], "pick")) {
+			player->Take(args);
+		}
+		else if (Same(args[0], "drop") || Same(args[0], "put")) {
+			player->Drop(args);
 		}
 		else ret = false;
 		break;

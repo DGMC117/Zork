@@ -16,6 +16,23 @@ void Room::Look() const {
 	cout << endl << GREEN_ << name << _OFF << endl;
 	cout << description;
 
+	// List exits --
+	for (auto it : container) {
+		if (it->type == EXIT) {
+			Exit* ex = (Exit*)it;
+			cout << endl << "Direction (" << ex->GetNameFrom(this) << ") you see " << ex->GetDestinationFrom(this)->name;
+		}
+	}
+
+	// List items --
+	for (auto it : container) {
+		if (it->type == ITEM)
+		{
+			Item* item = (Item*)it;
+			cout << endl << "There is an item here: " << item->name;
+		}
+	}
+
 	cout << endl;
 }
 
