@@ -15,14 +15,14 @@ Player::~Player() {}
 void Player::Look(const vector<string>& args) const {
 	if (args.size() > 1) {
 		for (auto it : parent->container) {
-			if (Same(it->name, args[1]) || (it->type == EXIT && Same(args[1], ((Exit*)it)->GetNameFrom((Room*)parent)))) {
+			if (/*Same(it->name, args[1]) || */it->type == EXIT && Same(args[1], ((Exit*)it)->GetNameFrom((Room*)parent))) {
 				it->Look();
 				return;
 			}
 		}
 
 		if (Same(args[1], "me")) {
-			cout << endl << name << endl;
+			cout << endl << YELLOW_ "" << name << "" _OFF << endl;
 			cout << description << endl;
 		}
 	}

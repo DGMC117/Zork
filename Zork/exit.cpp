@@ -13,8 +13,8 @@ Exit::Exit(const string& name, const string& opposite_name, const string& descri
 Exit::~Exit() {}
 
 void Exit::Look() const {
-	cout << name << " to " << opposite_name << endl;
-	cout << description << endl;
+	//cout << endl << name << " to " << opposite_name;
+	cout << endl << description << endl;
 }
 
 const string& Exit::GetNameFrom(const Room* room) const {

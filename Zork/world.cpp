@@ -125,6 +125,7 @@ bool World::ParseCommand(vector<string>& args) {
 			player->Go(args);
 		}
 		else ret = false;
+		break;
 	default:
 		ret = false;
 	}
