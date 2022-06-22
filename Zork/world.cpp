@@ -39,7 +39,7 @@ World::World() {
 	Exit* recovery_to_laboratory	= new Exit("west", "east", "Door", laboratory, recovery_room);
 	Exit* laboratory_to_exterior	= new Exit("south", "north", "Metal gate", exterior, laboratory);
 	Exit* laboratory_to_hallway		= new Exit("west", "east", "Blue corridor", hallway, laboratory);
-	Exit* hallway_to_assembly		= new Exit("south", "north", "Red corridor", assembly_room, hallway);
+	Exit* hallway_to_assembly		= new Exit("down", "up", "Stairs", assembly_room, hallway);
 	Exit* hallway_to_engineering	= new Exit("west", "east", "Yellow corridor", engineering_room, hallway);
 	Exit* engineering_to_reactor	= new Exit("north", "south", "Reinforced glass door", reactor_room, engineering_room);
 
@@ -84,6 +84,47 @@ bool World::ParseCommand(vector<string>& args) {
 	bool ret = true;
 
 	switch (args.size()) {
+	case 1: // commands with no arguments
+		if (Same(args[0], "look") || Same(args[0], "l")) {
+			player->Look(args);
+		}
+		else if (Same(args[0], "north") || Same(args[0], "n")) {
+			args.push_back("north");
+			player->Go(args);
+		}
+		else if (Same(args[0], "south") || Same(args[0], "s")) {
+			args.push_back("south");
+			player->Go(args);
+		}
+		else if (Same(args[0], "east") || Same(args[0], "e")) {
+			args.push_back("east");
+			player->Go(args);
+		}
+		else if (Same(args[0], "west") || Same(args[0], "w")) {
+			args.push_back("west");
+			player->Go(args);
+		}
+		else if (Same(args[0], "up") || Same(args[0], "u")) {
+			args.push_back("up");
+			player->Go(args);
+		}
+		else if (Same(args[0], "down") || Same(args[0], "d")) {
+			args.push_back("down");
+			player->Go(args);
+		}
+		else if (Same(args[0], "inventory") || Same(args[0], "i")) {
+			player->Inventory();
+		}
+		else ret = false;
+		break;
+	case 2: // commands with one arguments
+		if (Same(args[0], "look") || Same(args[0], "l")) {
+			player->Look(args);
+		}
+		else if (Same(args[0], "go")) {
+			player->Go(args);
+		}
+		else ret = false;
 	default:
 		ret = false;
 	}
