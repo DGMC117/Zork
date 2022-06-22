@@ -19,3 +19,20 @@ void Tokenize(const string& line, vector<string>& args) {
 int Roll(int min, int max) {
 	return (max > 0) ? min + (rand() % (max - min)) : 0;
 }
+
+void split(const string& line, vector<string>& parameters, const string delimeter) {
+
+	string aux = line;
+
+	int pos = 0;
+	string token;
+
+	while ((pos = aux.find(delimeter)) != string::npos) {
+		token = aux.substr(0, pos);
+		aux.erase(0, pos + delimeter.length());
+		parameters.push_back(token);
+	}
+
+	parameters.push_back(aux);
+
+}

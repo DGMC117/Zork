@@ -15,5 +15,6 @@ using namespace std;
 bool Same(const string& a, const string& b);
 void Tokenize(const string& line, vector<string>& args);
 int Roll(int min, int max);
+void split(const string& line, vector<string>& parameters, const string delimeter);
 
 #endif //__Globals__

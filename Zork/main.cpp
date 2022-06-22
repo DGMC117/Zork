@@ -14,6 +14,8 @@ int main() {
 	vector<string> args;
 	args.reserve(10);
 
+	string hero_name;
+
 	cout << BLUE_ "Welcome to Blue Mesa!" _OFF << endl;
 	cout << "--------------------" << endl;
 

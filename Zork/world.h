@@ -9,6 +9,9 @@
 
 using namespace std;
 
+class Entity;
+class Player;
+
 class World {
 public:
 	World();
@@ -20,6 +23,8 @@ public:
 
 private:
 	clock_t tick_timer;
+	vector<Entity*> entities;
+	Player* player;
 };
 
 #endif //__World__
