@@ -245,3 +245,81 @@ bool Player::Break(const vector<string>& args) {
 	cout << endl << "You break " << item->name << " with " << weapon->name << "...";
 	return true;
 }
+
+bool Player::Combine(const vector<string>& args) {
+	if (!IsAlive()) return false;
+
+	Item* comp1 = (Item*)Find(args[1], ITEM);
+	Item* comp2 = (Item*)Find(args[3], ITEM);
+	Item* tool	= (Item*)parent->Find(args[5], ITEM);
+	if (tool == NULL) tool = (Item*)Find(args[5], ITEM);
+
+	if (comp1 == NULL) {
+		cout << endl << "Object '" << args[1] << "' not found in your inventory." << endl;
+		return false;
+	}
+
+	if (comp2 == NULL) {
+		cout << endl << "Object '" << args[3] << "' not found in your inventory." << endl;
+		return false;
+	}
+
+	if (tool == NULL) {
+		cout << endl << "Object '" << args[5] << "' not found." << endl;
+		return false;
+	}
+
+	if (tool->item_type != COMBINER) {
+		cout << endl << "You can't use " << args[5] << " to combine anything." << endl;
+		return false;
+	}
+
+	if (tool->component1 != comp1 && tool->component2 != comp1) {
+		cout << endl << "You can't combine " << args[1] << " using " << args[5] << endl;
+		return false;
+	}
+
+	if (tool->component1 != comp2 && tool->component2 != comp2) {
+		cout << endl << "You can't combine " << args[3] << " using " << args[5] << endl;
+		return false;
+	}
+
+	cout << endl << "You combine " << args[1] << " and " << args[3] << " using " << args[5] << "..." << endl;
+	comp1->ChangeParentTo(tool->combination_result->parent);
+	comp2->ChangeParentTo(tool->combination_result->parent);
+	tool->combination_result->ChangeParentTo(tool);
+	return true;
+}
+
+bool Player::Transform(const vector<string>& args) {
+	if (!IsAlive()) return false;
+
+	Item* item = (Item*)Find(args[1], ITEM);
+	Item* tool = (Item*)parent->Find(args[3], ITEM);
+	if (tool == NULL) tool = (Item*)Find(args[3], ITEM);
+
+	if (item == NULL) {
+		cout << endl << "Object '" << args[1] << "' not found in your inventory." << endl;
+		return false;
+	}
+
+	if (tool == NULL) {
+		cout << endl << "Object '" << args[3] << "' not found." << endl;
+		return false;
+	}
+
+	if (tool->item_type != TRANSFORMER) {
+		cout << endl << "You can't use " << args[3] << " to transform anything." << endl;
+		return false;
+	}
+
+	if (tool->transformable != item) {
+		cout << endl << "You can't transform " << args[1] << " using " << args[3] << endl;
+		return false;
+	}
+
+	cout << endl << "You transform " << args[1] << " using " << args[3] << "..." << endl;
+	item->ChangeParentTo(tool->transform_result->parent);
+	tool->transform_result->ChangeParentTo(tool);
+	return true;
+}

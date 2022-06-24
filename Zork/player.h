@@ -17,6 +17,8 @@ public:
 	bool UnLock(const vector<string>& args);
 	void Inventory() const;
 	bool Break(const vector<string>& args);
+	bool Combine(const vector<string>& args);
+	bool Transform(const vector<string>& args);
 
 public:
 

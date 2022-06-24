@@ -13,7 +13,7 @@ Item::Item(const string& title, const string& description, Entity* parent, ItemT
 Item::~Item() {}
 
 void Item::Look() const {
-	cout << endl << name << (broken? " (broken)" : "") << endl;
+	cout << endl << name << (broken ? " (broken)" : "") << endl;
 	cout << description << endl;
 
 	vector<Entity*> stuff;

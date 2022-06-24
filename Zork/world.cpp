@@ -27,6 +27,8 @@ World::World() {
 	Room* engineering_room	= new Room("Engineering Room", "This is the engineering room.");
 	Room* reactor_room		= new Room("Reactor Room", "This is the reactor room.");
 
+	Room* invisible_room	= new Room("Invisible Room", "You should not be here.");
+
 	entities.push_back(recovery_room);
 	entities.push_back(laboratory);
 	entities.push_back(exterior);
@@ -34,6 +36,7 @@ World::World() {
 	entities.push_back(assembly_room);
 	entities.push_back(engineering_room);
 	entities.push_back(reactor_room);
+	entities.push_back(invisible_room);
 
 	// Exits
 	Exit* recovery_to_laboratory	= new Exit("west", "east", "Door", laboratory, recovery_room);
@@ -60,7 +63,8 @@ World::World() {
 	Item* dagger	= new Item("Dagger", "A small but sharp dagger. It has a few holes in its blade to make it lighter.", recovery_room, WEAPON);
 	Item* card		= new Item("Card", "A playing card for some strange game. The card's name seems to be 'Lightning Bolt'.", laboratory);
 	Item* poster	= new Item("Poster", "A poster with a simple diagram depicting a flame, a water drop and... a lightbulb?.", laboratory);
-	Item* burner	= new Item("Burner", "A standard-looking burner. The scientists here use them to make experiments.", laboratory);
+	Item* burner	= new Item("Burner", "A standard-looking burner. The scientists here use them to make experiments.", laboratory, COMBINER);
+	burner->pickable = false;
 	Item* box		= new Item("Box", "A cardboard box. It may have something inside of it.", hallway);
 	Item* vibranium	= new Item("Vibranium", "A vibranium ingot. This is the strongest metal in the multi-verse! Wait, the what?", box);
 	Item* frame		= new Item("Frame", "A cube-shaped metal frame. Looks like a component of some device.", assembly_room);
@@ -68,7 +72,7 @@ World::World() {
 	frame->lock_description = "This frame is floating in a stream of pure plasma energy, it is too dangerous to pick up.\nThe machine that generates this stream has a beautiful design with yellow stripes going from one end of it to the other.";
 	Item* computer	= new Item("Computer", "A computer, used by the staff. You see there is an open email:\n\n    Hey Sisay,\n\n    Did you see that the number 2 looks like a duck?\n    I love ducks! Look, here are four ducks! 2222\n    From now on two is my favourite number, and I will use it for EVERYTHING!\n\n    Jhoira, from Engineering.\n\n...What a strange individual.", assembly_room);
 	computer->pickable = false;
-	Item* forge		= new Item("Forge", "A huge forge that can shape any metal into any form. Maybe I could find a use for this?", assembly_room);
+	Item* forge		= new Item("Forge", "A huge forge that can shape any metal into any form. Maybe I could find a use for this?", assembly_room, TRANSFORMER);
 	forge->pickable = false;
 	Item* candybar	= new Item("Candybar", "A chocolate candybar. Looks yummy.", engineering_room);
 	Item* biochip	= new Item("Biochip", "A powerful little device. But what is it for?", engineering_room);
@@ -77,6 +81,13 @@ World::World() {
 	Item* cable		= new Item("Cable", "A very big cable, the size of an arm. it has yellow stripes.", reactor_room, BREAKABLE);
 	cable->pickable = false;
 	cable->unlocks_when_broken = frame;
+	Item* potion = new Item("Potion", "A bright yellow liquid contained in a glass bottle. I wonder if I should use it...", invisible_room);
+	burner->component1 = glowdust;
+	burner->component2 = bottle;
+	burner->combination_result = potion;
+	Item* shield = new Item("Shield", "A round, metal shield with a star in the middle. Looks like it can deflect any attack.", invisible_room);
+	forge->transformable = vibranium;
+	forge->transform_result = shield;
 
 	entities.push_back(glowdust);
 	entities.push_back(machine);
@@ -94,6 +105,8 @@ World::World() {
 	entities.push_back(battery);
 	entities.push_back(bottle);
 	entities.push_back(cable);
+	entities.push_back(potion);
+	entities.push_back(shield);
 
 	// Player
 	player = new Player("Cloud", "You are a soldier assigned to protect these installations with your life.", recovery_room);
@@ -189,6 +202,15 @@ bool World::ParseCommand(vector<string>& args) {
 		}
 		else if (Same(args[0], "break") || Same(args[0], "brk")) {
 			player->Break(args);
+		}
+		else if (Same(args[0], "transform") || Same(args[0], "tra")) {
+			player->Transform(args);
+		}
+		else ret = false;
+		break;
+	case 6:
+		if (Same(args[0], "combine") || Same(args[0], "com")) {
+			player->Combine(args);
 		}
 		else ret = false;
 		break;
