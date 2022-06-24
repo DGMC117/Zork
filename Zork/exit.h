@@ -7,6 +7,12 @@ using namespace std;
 
 class Room;
 
+enum ExitType {
+	KEY,
+	CODE,
+	NONE
+};
+
 class Exit : public Entity {
 public:
 	Exit(const string& name, const string& opposite_name, const string& description, Room* origin, Room* destination, bool one_way = false);
@@ -25,6 +31,9 @@ public:
 	Room* destination;
 
 	Entity* key;
+	string code;
+
+	ExitType exit_type;
 };
 
 #endif //__Exit__

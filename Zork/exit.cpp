@@ -6,6 +6,7 @@ Exit::Exit(const string& name, const string& opposite_name, const string& descri
 	Entity(name, description, (Entity*)origin),
 	closed(false), locked(false), key(NULL), one_way(one_way), destination(destination), opposite_name(opposite_name) {
 	type = EXIT;
+	exit_type = NONE;
 
 	if (one_way == false) destination->container.push_back(this);
 }
@@ -13,7 +14,7 @@ Exit::Exit(const string& name, const string& opposite_name, const string& descri
 Exit::~Exit() {}
 
 void Exit::Look() const {
-	//cout << endl << name << " to " << opposite_name;
+	cout << endl << name << " to " << opposite_name;
 	cout << endl << description << endl;
 }
 

@@ -42,6 +42,9 @@ World::World() {
 	Exit* hallway_to_assembly		= new Exit("down", "up", "Stairs", assembly_room, hallway);
 	Exit* hallway_to_engineering	= new Exit("west", "east", "Yellow corridor", engineering_room, hallway);
 	Exit* engineering_to_reactor	= new Exit("north", "south", "Reinforced glass door", reactor_room, engineering_room);
+	engineering_to_reactor->locked = true;
+	engineering_to_reactor->exit_type = CODE;
+	engineering_to_reactor->code = "2222";
 
 	entities.push_back(recovery_to_laboratory);
 	entities.push_back(laboratory_to_exterior);
@@ -51,22 +54,39 @@ World::World() {
 	entities.push_back(engineering_to_reactor);
 
 	// Items
-	Item* glowdust = new Item("Glowdust", "A strange yellow-ish dust that generates light.", recovery_room);
-	Item* machine = new Item("Machine", "A last generation recovery machine built to cure wounds.", recovery_room);
-	Item* dagger = new Item("Dagger", "A small but sharp dagger. It has a few holes in its blade to make it lighter.", recovery_room);
-	Item* card = new Item("Card", "A playing card for some strange game. The card's name seems to be 'Lightning Bolt'.", laboratory);
-	Item* poster = new Item("Poster", "A poster with a simple diagram depicting a flame, a water drop and... a lightbulb?.", laboratory);
-	Item* burner = new Item("Burner", "A standard-looking burner. The scientists here use them to make experiments.", laboratory);
-	Item* box = new Item("Box", "A cardboard box. It may have something inside of it.", hallway);
-	Item* vibranium = new Item("Vibranium", "A vibranium ingot. This is the strongest metal in the multi-verse! Wait, the what?", box);
-	Item* frame = new Item("Frame", "A cube-shaped metal frame. Looks like a component of some device.", assembly_room);
-	Item* computer = new Item("Computer", "A computer, used by the staff. You see there is an open email:\n\n    Hey Sisay,\n\n    Did you see that the number 2 looks like a duck?\n    I love ducks! Look, here are four ducks! 2222\n    From now on two is my favourite number, and I will use it for EVERYTHING!\n\n    Jhoira, from Engineering.\n\n...What a strange individual.", assembly_room);
-	Item* forge = new Item("Forge", "A huge forge that can shape any metal into any form. Maybe I could find a use for this?", assembly_room);
-	Item* candybar = new Item("Candybar", "A chocolate candybar. Looks yummy.", engineering_room);
-	Item* biochip = new Item("Biochip", "A powerful little device. But what is it for?", engineering_room);
-	Item* battery = new Item("Battery", "This battery looks as it contained an entire galaxy inside, despite being so small. There is a small printing on one side that says 'Orion'.", reactor_room);
-	Item* bottle = new Item("Bottle", "A glass bottle that contains a strange liquid. You feel as it was water, but it looks akward.", reactor_room);
-	Item* cable = new Item("Cable", "A very big cable, the size of an arm. it has yellow stripes.", reactor_room);
+	Item* glowdust	= new Item("Glowdust", "A strange yellow-ish dust that generates light.", recovery_room);
+	Item* machine	= new Item("Machine", "A last generation recovery machine built to cure wounds.", recovery_room);
+	Item* dagger	= new Item("Dagger", "A small but sharp dagger. It has a few holes in its blade to make it lighter.", recovery_room);
+	Item* card		= new Item("Card", "A playing card for some strange game. The card's name seems to be 'Lightning Bolt'.", laboratory);
+	Item* poster	= new Item("Poster", "A poster with a simple diagram depicting a flame, a water drop and... a lightbulb?.", laboratory);
+	Item* burner	= new Item("Burner", "A standard-looking burner. The scientists here use them to make experiments.", laboratory);
+	Item* box		= new Item("Box", "A cardboard box. It may have something inside of it.", hallway);
+	Item* vibranium	= new Item("Vibranium", "A vibranium ingot. This is the strongest metal in the multi-verse! Wait, the what?", box);
+	Item* frame		= new Item("Frame", "A cube-shaped metal frame. Looks like a component of some device.", assembly_room);
+	Item* computer	= new Item("Computer", "A computer, used by the staff. You see there is an open email:\n\n    Hey Sisay,\n\n    Did you see that the number 2 looks like a duck?\n    I love ducks! Look, here are four ducks! 2222\n    From now on two is my favourite number, and I will use it for EVERYTHING!\n\n    Jhoira, from Engineering.\n\n...What a strange individual.", assembly_room);
+	Item* forge		= new Item("Forge", "A huge forge that can shape any metal into any form. Maybe I could find a use for this?", assembly_room);
+	Item* candybar	= new Item("Candybar", "A chocolate candybar. Looks yummy.", engineering_room);
+	Item* biochip	= new Item("Biochip", "A powerful little device. But what is it for?", engineering_room);
+	Item* battery	= new Item("Battery", "This battery looks as it contained an entire galaxy inside, despite being so small. There is a small printing on one side that says 'Orion'.", reactor_room);
+	Item* bottle	= new Item("Bottle", "A glass bottle that contains a strange liquid. You feel as it was water, but it looks akward.", reactor_room);
+	Item* cable		= new Item("Cable", "A very big cable, the size of an arm. it has yellow stripes.", reactor_room);
+
+	entities.push_back(glowdust);
+	entities.push_back(machine);
+	entities.push_back(dagger);
+	entities.push_back(card);
+	entities.push_back(poster);
+	entities.push_back(burner);
+	entities.push_back(box);
+	entities.push_back(vibranium);
+	entities.push_back(frame);
+	entities.push_back(computer);
+	entities.push_back(forge);
+	entities.push_back(candybar);
+	entities.push_back(biochip);
+	entities.push_back(battery);
+	entities.push_back(bottle);
+	entities.push_back(cable);
 
 	// Player
 	player = new Player("Cloud", "You are a soldier assigned to protect these installations with your life.", recovery_room);
@@ -156,6 +176,9 @@ bool World::ParseCommand(vector<string>& args) {
 		}
 		else if (Same(args[0], "drop") || Same(args[0], "put")) {
 			player->Drop(args);
+		}
+		else if (Same(args[0], "unlock") || Same(args[0], "unlk")) {
+			player->UnLock(args);
 		}
 		else ret = false;
 		break;

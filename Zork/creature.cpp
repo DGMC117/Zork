@@ -107,4 +107,22 @@ bool Creature::Drop(const vector<string>& args) {
 	return true;
 }
 
+bool Creature::UnLock(const vector<string>& args) {
+	if (!IsAlive()) return false;
+
+	Exit* exit = GetRoom()->GetExit(args[1]);
+
+	if (exit == NULL || exit->locked == false) return false;
+
+	Item* item = (Item*)Find(args[3], ITEM);
+
+	if (item == NULL || exit->key != item) return false;
+
+	if (PlayerInRoom()) cout << endl << name << "unlocks " << exit->GetNameFrom((Room*)parent) << "..." << endl;
+
+	exit->locked = false;
+
+	return true;
+}
+
 void Creature::Tick() {}

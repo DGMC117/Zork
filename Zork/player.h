@@ -14,6 +14,7 @@ public:
 	void Look(const vector<string>& args) const;
 	bool Take(const vector<string>& args);
 	bool Drop(const vector<string>& args);
+	bool UnLock(const vector<string>& args);
 	void Inventory() const;
 
 public:

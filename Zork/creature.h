@@ -23,6 +23,7 @@ public:
 	virtual bool Take(const vector<string>& args);
 	virtual bool Drop(const vector<string>& args);
 	virtual void Inventory() const;
+	virtual bool UnLock(const vector<string>& args);
 	virtual void Tick();
 
 public:

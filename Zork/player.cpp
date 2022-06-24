@@ -142,3 +142,50 @@ bool Player::Drop(const vector<string>& args) {
 
 	return false;
 }
+
+bool Player::UnLock(const vector<string>& args) {
+	if (!IsAlive()) return false;
+
+	Exit* exit = GetRoom()->GetExit(args[1]);
+
+	if (exit == NULL) {
+		cout << endl << "There is no exit at '" << args[1] << "'." << endl;
+		return false;
+	}
+
+	if (exit->locked == false) {
+		cout << endl << "That exit is not locked." << endl;
+		return false;
+	}
+
+	Item* item = (Item*)Find(args[3], ITEM);
+
+	if (Same(args[3], "code")) {
+		cout << endl << "Type the code for the door:" << endl;
+		string code = "";
+		cin >> code;
+		if (!Same(code, exit->code)) {
+			cout << endl << "Wrong code!" << endl;
+			return false;
+		}
+	}
+	else {
+		if (item == NULL)
+		{
+			cout << endl << "Key '" << args[3] << "' not found in your inventory." << endl;
+			return false;
+		}
+
+		if (exit->key != item)
+		{
+			cout << endl << "Key '" << item->name << "' is not the key for " << exit->GetNameFrom((Room*)parent) << "." << endl;
+			return false;
+		}
+	}
+
+	cout << endl << "You unlock " << exit->GetNameFrom((Room*)parent) << "..." << endl;
+
+	exit->locked = false;
+
+	return true;
+}
