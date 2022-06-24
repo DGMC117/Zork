@@ -162,6 +162,9 @@
     <ClInclude Include="room.h" />
     <ClInclude Include="world.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\David\Documents\Master\Admission\blue_mesa_map.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

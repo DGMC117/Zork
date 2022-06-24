@@ -19,13 +19,13 @@ World::World() {
 	tick_timer = clock();
 
 	// Rooms
-	Room* recovery_room		= new Room("Recovery Room", "This is the recovery room.");
-	Room* laboratory		= new Room("Laboratory", "This is the laboratory.");
-	Room* exterior			= new Room("Exterior", "This is the exterior.");
-	Room* hallway			= new Room("Hallway", "This is the hallway.");
-	Room* assembly_room		= new Room("Assembly Room", "This is the assembly room.");
-	Room* engineering_room	= new Room("Engineering Room", "This is the engineering room.");
-	Room* reactor_room		= new Room("Reactor Room", "This is the reactor room.");
+	Room* recovery_room		= new Room("Recovery Room", "You see a small room, with multiple shelves that have a wide variety of medical equipment.\nA weird-looking machine is in the corner of the room.");
+	Room* laboratory		= new Room("Laboratory", "This is the laboratory.\nA disgusting smell fills the room, maybe the scientists should take a break from their experiments, since they clearly are not going well.\nOn the north of the room you can see a huge gate, with a device on the side that looks as it should hold some kind of power cell.");
+	Room* exterior			= new Room("Exterior", "A big, wild forest extends around the installations as far as the eye can see.");
+	Room* hallway			= new Room("Hallway", "This space's only purpose seems to be to connect rooms.\nThere is not much to see around here.");
+	Room* assembly_room		= new Room("Assembly Room", "This room is filled with heavy-duty machinery.\nYou can see that the room is designed to be able to create anything imaginable here.");
+	Room* engineering_room	= new Room("Engineering Room", "Here is where the computer people investigate about new technologies.\nThese people are so smart it is almost scary.");
+	Room* reactor_room		= new Room("Reactor Room", "A big, powerful reactor lies in front of you.\nYou feel overwhelmed by the huge amount of energy that emanates from it.");
 
 	Room* invisible_room	= new Room("Invisible Room", "You should not be here.");
 
