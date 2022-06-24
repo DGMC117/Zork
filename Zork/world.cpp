@@ -63,13 +63,19 @@ World::World() {
 	professor->hit_points = 5;
 	professor->dialog = "Cloud!\nThis is bad, we have accidentally summoned one of the mythobeasts, Animar!\nWe need to capture it, or else it will destroy our installations.\nMaybe you could look for a metal frame and a biochip and build our latest prototype for capturing mythobeasts.\nPlease, help us! You are our only hope.\nAnimar is on the exterior of the installations, north from here.";
 
+	Creature* spawn = new Creature("Spawn", "One of Animar's spawn, a minion.", hallway);
+	spawn->hit_points = 10;
+
 	entities.push_back(professor);
+	entities.push_back(spawn);
 
 	// Items
 	Item* glowdust	= new Item("Glowdust", "A strange yellow-ish dust that generates light.", recovery_room);
 	Item* machine	= new Item("Machine", "A last generation recovery machine built to cure wounds.", recovery_room);
 	machine->pickable = false;
 	Item* dagger	= new Item("Dagger", "A small but sharp dagger. It has a few holes in its blade to make it lighter.", recovery_room, WEAPON);
+	dagger->min_value = 2;
+	dagger->max_value = 4;
 	Item* card		= new Item("Card", "A playing card for some strange game. The card's name seems to be 'Lightning Bolt'.", laboratory);
 	Item* poster	= new Item("Poster", "A poster with a simple diagram depicting a flame, a water drop and... a lightbulb?.", laboratory);
 	Item* burner	= new Item("Burner", "A standard-looking burner. The scientists here use them to make experiments.", laboratory, COMBINER);
@@ -98,12 +104,15 @@ World::World() {
 	burner->component2 = bottle;
 	burner->combination_result = potion;
 	Item* shield	= new Item("Shield", "A round, metal shield with a star in the middle. Looks like it can deflect any attack.", invisible_room);
+	shield->min_value = 5;
+	shield->max_value = 10;
 	forge->transformable = vibranium;
 	forge->transform_result = shield;
 	Item* mythocube	= new Item("Mythocube", "A cubic device designed to capture mythobeasts.", invisible_room);
 	assembler->component1 = frame;
 	assembler->component2 = biochip;
 	assembler->combination_result = mythocube;
+	Item* photo		= new Item("Photo", "A family picture. Depicts the professor and their beautiful wife and children.", professor);
 
 	entities.push_back(glowdust);
 	entities.push_back(machine);
@@ -125,6 +134,7 @@ World::World() {
 	entities.push_back(shield);
 	entities.push_back(assembler);
 	entities.push_back(mythocube);
+	entities.push_back(photo);
 
 	// Player
 	player = new Player("Cloud", "You are a soldier assigned to protect these installations with your life.", recovery_room);
@@ -191,6 +201,9 @@ bool World::ParseCommand(vector<string>& args) {
 		else if (Same(args[0], "inventory") || Same(args[0], "i")) {
 			player->Inventory();
 		}
+		else if (Same(args[0], "stats") || Same(args[0], "st")) {
+			player->Stats();
+		}
 		else ret = false;
 		break;
 	case 2: // commands with one arguments
@@ -208,6 +221,21 @@ bool World::ParseCommand(vector<string>& args) {
 		}
 		else if (Same(args[0], "talk")) {
 			player->Talk(args);
+		}
+		else if (Same(args[0], "equip") || Same(args[0], "eq")) {
+			player->Equip(args);
+		}
+		else if (Same(args[0], "unequip") || Same(args[0], "uneq")) {
+			player->UnEquip(args);
+		}
+		else if (Same(args[0], "examine") || Same(args[0], "ex")) {
+			player->Examine(args);
+		}
+		else if (Same(args[0], "attack") || Same(args[0], "at")) {
+			player->Attack(args);
+		}
+		else if (Same(args[0], "loot") || Same(args[0], "lt")) {
+			player->Loot(args);
 		}
 		else ret = false;
 		break;

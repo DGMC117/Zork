@@ -118,7 +118,9 @@ void Player::Inventory() const {
 	}
 
 	for (auto it : items) {
-		cout << endl << it->name;
+		if (it == weapon) cout << endl << it->name << " (as weapon)";
+		else if (it == armour) cout << endl << it->name << " (as armour)";
+		else cout << endl << it->name;
 	}
 
 	cout << endl;
@@ -335,5 +337,115 @@ bool Player::Talk(const vector<string>& args) {
 	}
 
 	creature->Talk();
+	return true;
+}
+
+bool Player::Equip(const vector<string>& args) {
+	Item* item = (Item*)Find(args[1], ITEM);
+
+	if (item == NULL) {
+		cout << endl << "Cannot find '" << args[1] << "' is not in your inventory." << endl;
+		return false;
+	}
+
+	switch (item->item_type)
+	{
+	case WEAPON:
+		weapon = item;
+		break;
+
+	case ARMOUR:
+		armour = item;
+		break;
+
+	default:
+		cout << endl << item->name << " cannot be equipped." << endl;
+		return false;
+	}
+
+	cout << endl << "You equip " << item->name << "..." << endl;
+
+	return true;
+}
+
+bool Player::UnEquip(const vector<string>& args) {
+	if (!IsAlive()) return false;
+
+	Item* item = (Item*)Find(args[1], ITEM);
+
+	if (item == NULL) {
+		cout << endl << args[1] << " is not in your inventory." << endl;
+		return false;
+	}
+
+	if (item == weapon) weapon = NULL;
+	else if (item == armour) armour = NULL;
+	else
+	{
+		cout << endl << item->name << " is not equipped." << endl;
+		return false;
+	}
+
+	cout << endl << "You un-equip " << item->name << "..." << endl;
+
+	return true;
+}
+
+bool Player::Examine(const vector<string>& args) const {
+	Creature* target = (Creature*)parent->Find(args[1], CREATURE);
+
+	if (target == NULL) {
+		cout << endl << args[1] << " is not here." << endl;
+		return false;
+	}
+
+	target->Inventory();
+	target->Stats();
+
+	return true;
+}
+
+bool Player::Attack(const vector<string>& args)
+{
+	Creature* target = (Creature*)parent->Find(args[1], CREATURE);
+
+	if (target == NULL) {
+		cout << endl << args[1] << " is not here.";
+		return false;
+	}
+
+	combat_target = target;
+	cout << endl << "You jump to attack " << target->name << "!" << endl;
+	return true;
+}
+
+bool Player::Loot(const vector<string>& args) {
+	Creature* target = (Creature*)parent->Find(args[1], CREATURE);
+
+	if (target == NULL) {
+		cout << endl << args[1] << " is not here." << endl;
+		return false;
+	}
+
+	if (target->IsAlive() == true) {
+		cout << endl << target->name << " cannot be looted until it is killed." << endl;
+		return false;
+	}
+
+	vector<Entity*> items;
+	target->FindAll(ITEM, items);
+
+	if (items.size() > 0) {
+		cout << endl << "You loot " << target->name << "'s corpse:" << endl;
+
+		for (auto it : items) {
+			Item* i = (Item*)it;
+			cout << "You find: " << i->name << endl;
+			i->ChangeParentTo(this);
+		}
+	}
+	else
+		cout << endl << "You loot " << target->name << "'s corpse, but find nothing there." << endl;
+
 	return true;
 }

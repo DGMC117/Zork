@@ -21,6 +21,12 @@ public:
 	bool Transform(const vector<string>& args);
 	bool Talk(const vector<string>& args);
 
+	bool Examine(const vector<string>& args) const;
+	bool Equip(const vector<string>& args);
+	bool UnEquip(const vector<string>& args);
+	bool Attack(const vector<string>& args);
+	bool Loot(const vector<string>& args);
+
 public:
 
 };
