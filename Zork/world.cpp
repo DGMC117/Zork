@@ -40,7 +40,9 @@ World::World() {
 
 	// Exits
 	Exit* recovery_to_laboratory	= new Exit("west", "east", "Door", laboratory, recovery_room);
-	Exit* laboratory_to_exterior	= new Exit("south", "north", "Metal gate", exterior, laboratory);
+	Exit* laboratory_to_exterior	= new Exit("south", "north", "A huge matal gate. Seems to require some kind of device to be able to open.", exterior, laboratory);
+	laboratory_to_exterior->locked = true;
+	laboratory_to_exterior->exit_type = KEY;
 	Exit* laboratory_to_hallway		= new Exit("west", "east", "Blue corridor", hallway, laboratory);
 	Exit* hallway_to_assembly		= new Exit("down", "up", "Stairs", assembly_room, hallway);
 	Exit* hallway_to_engineering	= new Exit("west", "east", "Yellow corridor", engineering_room, hallway);
@@ -74,9 +76,12 @@ World::World() {
 	computer->pickable = false;
 	Item* forge		= new Item("Forge", "A huge forge that can shape any metal into any form. Maybe I could find a use for this?", assembly_room, TRANSFORMER);
 	forge->pickable = false;
+	Item* assembler = new Item("Assembler", "A machine that is able to combine two different components into one item.", assembly_room, COMBINER);
+	assembler->pickable;
 	Item* candybar	= new Item("Candybar", "A chocolate candybar. Looks yummy.", engineering_room);
 	Item* biochip	= new Item("Biochip", "A powerful little device. But what is it for?", engineering_room);
 	Item* battery	= new Item("Battery", "This battery looks as it contained an entire galaxy inside, despite being so small. There is a small printing on one side that says 'Orion'.", reactor_room);
+	laboratory_to_exterior->key = battery;
 	Item* bottle	= new Item("Bottle", "A glass bottle that contains a strange liquid. You feel as it was water, but it looks akward.", reactor_room);
 	Item* cable		= new Item("Cable", "A very big cable, the size of an arm. it has yellow stripes.", reactor_room, BREAKABLE);
 	cable->pickable = false;
@@ -85,9 +90,13 @@ World::World() {
 	burner->component1 = glowdust;
 	burner->component2 = bottle;
 	burner->combination_result = potion;
-	Item* shield = new Item("Shield", "A round, metal shield with a star in the middle. Looks like it can deflect any attack.", invisible_room);
+	Item* shield	= new Item("Shield", "A round, metal shield with a star in the middle. Looks like it can deflect any attack.", invisible_room);
 	forge->transformable = vibranium;
 	forge->transform_result = shield;
+	Item* mythocube	= new Item("Mythocube", "A cubic device designed to capture mythobeasts.", invisible_room);
+	assembler->component1 = frame;
+	assembler->component2 = biochip;
+	assembler->combination_result = mythocube;
 
 	entities.push_back(glowdust);
 	entities.push_back(machine);
@@ -107,6 +116,8 @@ World::World() {
 	entities.push_back(cable);
 	entities.push_back(potion);
 	entities.push_back(shield);
+	entities.push_back(assembler);
+	entities.push_back(mythocube);
 
 	// Player
 	player = new Player("Cloud", "You are a soldier assigned to protect these installations with your life.", recovery_room);
