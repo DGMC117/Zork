@@ -19,6 +19,7 @@ public:
 	bool Break(const vector<string>& args);
 	bool Combine(const vector<string>& args);
 	bool Transform(const vector<string>& args);
+	bool Talk(const vector<string>& args);
 
 public:
 

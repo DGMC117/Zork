@@ -323,3 +323,17 @@ bool Player::Transform(const vector<string>& args) {
 	tool->transform_result->ChangeParentTo(tool);
 	return true;
 }
+
+bool Player::Talk(const vector<string>& args) {
+	if (!IsAlive()) return false;
+
+	Creature* creature = (Creature*)parent->Find(args[1], CREATURE);
+
+	if (creature == NULL) {
+		cout << endl << "Creature '" << args[1] << "' not found." << endl;
+		return false;
+	}
+
+	creature->Talk();
+	return true;
+}

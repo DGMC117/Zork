@@ -125,4 +125,13 @@ bool Creature::UnLock(const vector<string>& args) {
 	return true;
 }
 
+void Creature::Talk() {
+	if (dialog == "") {
+		cout << endl << "..." << endl;
+	}
+	else {
+		cout << endl << dialog << endl;
+	}
+}
+
 void Creature::Tick() {}

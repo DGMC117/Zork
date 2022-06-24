@@ -25,9 +25,12 @@ public:
 	virtual void Inventory() const;
 	virtual bool UnLock(const vector<string>& args);
 	virtual void Tick();
+	virtual void Talk();
 
 public:
 	int hit_points;
+
+	string dialog = "";
 };
 
 #endif //__Creature__

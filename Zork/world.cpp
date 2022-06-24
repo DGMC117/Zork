@@ -58,6 +58,13 @@ World::World() {
 	entities.push_back(hallway_to_engineering);
 	entities.push_back(engineering_to_reactor);
 
+	// Creatures
+	Creature* professor = new Creature("Professor", "Professor Ficus is a curious individual. He is a scholar in mythobeast studies.", laboratory);
+	professor->hit_points = 5;
+	professor->dialog = "Cloud!\nThis is bad, we have accidentally summoned one of the mythobeasts, Animar!\nWe need to capture it, or else it will destroy our installations.\nMaybe you could look for a metal frame and a biochip and build our latest prototype for capturing mythobeasts.\nPlease, help us! You are our only hope.\nAnimar is on the exterior of the installations, north from here.";
+
+	entities.push_back(professor);
+
 	// Items
 	Item* glowdust	= new Item("Glowdust", "A strange yellow-ish dust that generates light.", recovery_room);
 	Item* machine	= new Item("Machine", "A last generation recovery machine built to cure wounds.", recovery_room);
@@ -198,6 +205,9 @@ bool World::ParseCommand(vector<string>& args) {
 		}
 		else if (Same(args[0], "drop") || Same(args[0], "put")) {
 			player->Drop(args);
+		}
+		else if (Same(args[0], "talk")) {
+			player->Talk(args);
 		}
 		else ret = false;
 		break;

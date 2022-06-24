@@ -33,6 +33,16 @@ void Room::Look() const {
 		}
 	}
 
+	// List creatures --
+	for (auto it : container) {
+		if (it->type == CREATURE) {
+			Creature* cr = (Creature*)it;
+			cout << endl << "There is someone else here: " << cr->name;
+			if (cr->IsAlive() == false)
+				cout << " (dead)";
+		}
+	}
+
 	cout << endl;
 }
 
