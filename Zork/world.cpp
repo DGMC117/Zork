@@ -152,6 +152,7 @@ World::World() {
 	entities.push_back(photo);
 	entities.push_back(claws);
 	entities.push_back(staff);
+	entities.push_back(note);
 
 	// Player
 	player = new Player("Cloud", "You are a soldier assigned to protect these installations with your life.", recovery_room);

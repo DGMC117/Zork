@@ -207,7 +207,7 @@ int Creature::MakeAttack() {
 		return false;
 	}
 
-	int result = (weapon) ? weapon->GetValue() : Roll(min_damage, max_damage);
+	int result = (weapon ? weapon->GetValue() : Roll(min_damage, max_damage)) + base_strength;
 
 	if (PlayerInRoom()) cout << name << " attacks " << combat_target->name << " for " << result << endl;
 
@@ -259,6 +259,7 @@ bool Creature::Loot(const vector<string>& args)
 
 void Creature::Stats() const {
 	cout << endl << "Hit Points: " << hit_points;
+	cout << endl << "Base Strength: " << base_strength;
 	cout << endl << "Attack: (" << ((weapon) ? weapon->name : "no weapon") << ") ";
 	cout << ((weapon) ? weapon->min_value : min_damage) << "-" << ((weapon) ? weapon->max_value : max_damage);
 	cout << endl << "Protection: (" << ((armour) ? armour->name : "no armour") << ") ";
