@@ -13,7 +13,7 @@ Item::Item(const string& title, const string& description, Entity* parent, ItemT
 Item::~Item() {}
 
 void Item::Look() const {
-	cout << endl << name << endl;
+	cout << endl << name << (broken? " (broken)" : "") << endl;
 	cout << description << endl;
 
 	vector<Entity*> stuff;
@@ -27,4 +27,9 @@ void Item::Look() const {
 
 int Item::GetValue() const {
 	return Roll(min_value, max_value);
+}
+
+void Item::Break() {
+	broken = true;
+	unlocks_when_broken->locked = false;
 }

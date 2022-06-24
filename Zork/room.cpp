@@ -29,7 +29,7 @@ void Room::Look() const {
 		if (it->type == ITEM)
 		{
 			Item* item = (Item*)it;
-			cout << endl << "There is an item here: " << item->name;
+			cout << endl << "There is an item here: " << item->name << (item->broken ? " (broken)" : "");
 		}
 	}
 

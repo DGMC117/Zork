@@ -70,6 +70,16 @@ bool Player::Take(const vector<string>& args) {
 			return false;
 		}
 
+		if (subitem->locked) {
+			cout << endl << item->lock_description << endl;
+			return false;
+		}
+
+		if (!subitem->pickable) {
+			cout << endl << "You can't pick " << subitem->name << " up." << endl;
+			return false;
+		}
+
 		cout << endl << "You take " << subitem->name << " from " << item->name << "." << endl;
 		subitem->ChangeParentTo(this);
 	}
@@ -78,6 +88,16 @@ bool Player::Take(const vector<string>& args) {
 
 		if (item == NULL) {
 			cout << endl << "There is no item here with that name." << endl;
+			return false;
+		}
+
+		if (item->locked) {
+			cout << endl << item->lock_description << endl;
+			return false;
+		}
+
+		if (!item->pickable) {
+			cout << endl << "You can't pick up " << item->name << endl;
 			return false;
 		}
 
@@ -170,14 +190,12 @@ bool Player::UnLock(const vector<string>& args) {
 		}
 	}
 	else {
-		if (item == NULL)
-		{
+		if (item == NULL) {
 			cout << endl << "Key '" << args[3] << "' not found in your inventory." << endl;
 			return false;
 		}
 
-		if (exit->key != item)
-		{
+		if (exit->key != item) {
 			cout << endl << "Key '" << item->name << "' is not the key for " << exit->GetNameFrom((Room*)parent) << "." << endl;
 			return false;
 		}
@@ -187,5 +205,43 @@ bool Player::UnLock(const vector<string>& args) {
 
 	exit->locked = false;
 
+	return true;
+}
+
+bool Player::Break(const vector<string>& args) {
+	if (!IsAlive()) return false;
+
+	Item* item = (Item*)parent->Find(args[1], ITEM);
+	Item* weapon = (Item*)Find(args[3], ITEM);
+
+	// we could break something from a container
+	if (item == NULL) item = (Item*)Find(args[1], ITEM);
+	if (item == NULL) {
+		cout << endl << "Object '" << args[1] << "' not found." << endl;
+		return false;
+	}
+	
+	if (weapon == NULL) {
+		cout << endl << "Object '" << args[3] << "' not found not found in your inventory." << endl;
+		return false;
+	}
+
+	if (item->broken) {
+		cout << endl << "This is already broken!" << endl;
+		return false;
+	}
+
+	if (weapon->item_type != WEAPON) {
+		cout << endl << "I don't think you can break anything at all with this " << weapon->name << "." << endl;
+		return false;
+	}
+
+	if (item->item_type != BREAKABLE) {
+		cout << endl << "Doesn't seem like this is going to break soon..." << endl;
+		return false;
+	}
+
+	item->Break();
+	cout << endl << "You break " << item->name << " with " << weapon->name << "...";
 	return true;
 }
