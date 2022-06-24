@@ -44,6 +44,11 @@ int main() {
 			break;
 		}
 
+		if (my_world.game_complete) {
+			cout << endl << BLUE_ "You did it, you beat the game!\nCongratulations!" _OFF << endl;
+			break;
+		}
+
 		if (args.size() > 0 && Same(args[0], "quit")) break;
 
 		if (my_world.Tick(args) == false) cout << endl << endl << "Sorry, I do not understand your command." << endl;

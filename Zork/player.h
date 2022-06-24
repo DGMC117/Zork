@@ -20,6 +20,7 @@ public:
 	bool Combine(const vector<string>& args);
 	bool Transform(const vector<string>& args);
 	bool Talk(const vector<string>& args);
+	bool Use(const vector<string>& args);
 
 	bool Examine(const vector<string>& args) const;
 	bool Equip(const vector<string>& args);
@@ -28,6 +29,7 @@ public:
 	bool Loot(const vector<string>& args);
 
 public:
+	int max_hit_points = 20;
 
 };
 

@@ -449,3 +449,60 @@ bool Player::Loot(const vector<string>& args) {
 
 	return true;
 }
+
+bool Player::Use(const vector<string>& args) {
+	if (!IsAlive()) return false;
+
+	Item* item = (Item*)parent->Find(args[1], ITEM);
+	if (item == NULL) item = (Item*)Find(args[1], ITEM);
+
+	if (item == NULL) {
+		cout << endl << "Object '" << args[1] << "' not found in your inventory." << endl;
+		return false;
+	}
+
+	if (args.size() == 2) {
+		if (item->name != "Machine" && item->name != "Candybar" && item->name != "Potion") {
+			cout << endl << "What would I use this for, anyways..." << endl;
+			return false;
+		}
+
+		if (item->name == "Machine") {
+			cout << endl << "You use the recovery machine..." << endl << "You feel full of energy." << endl;
+			hit_points = max_hit_points;
+		}
+		else if (item->name == "Candybar") {
+			cout << endl << "Strangely, you feel healthier after eating this." << endl;
+			max_hit_points += 10;
+			hit_points += 10;
+		}
+		else {
+			cout << endl << "You feel your muscles grow in size and become much more powerful..." << endl;
+			base_strength += 5;
+		}
+
+		return true;
+	}
+
+	if (item->name != "Mythocube") {
+		cout << endl << "What would I use this for, anyways..." << endl;
+		return false;
+	}
+
+	Creature* target = (Creature*)parent->Find(args[3], CREATURE);
+
+	if (target == NULL) {
+		cout << endl << args[1] << " is not here.";
+		return false;
+	}
+
+	if (target->name != "Animar") {
+		cout << endl << "It would not work on this creature." << endl;
+		return false;
+	}
+
+	cout << endl << "You capture Animar with the mythocube, putting an end to its reign of terror." << endl;
+	max_hit_points = 999;
+	
+	return true;
+}

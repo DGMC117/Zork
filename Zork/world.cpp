@@ -151,7 +151,7 @@ World::World() {
 
 	// Player
 	player = new Player("Cloud", "You are a soldier assigned to protect these installations with your life.", recovery_room);
-	player->hit_points = 20;
+	player->hit_points = player->max_hit_points;
 	entities.push_back(player);
 }
 
@@ -166,6 +166,8 @@ bool World::Tick(vector<string>& args) {
 	if (args.size() > 0 && args[0].length() > 0) ret = ParseCommand(args);
 
 	GameLoop();
+
+	if (player->max_hit_points == 999) game_complete = true;
 
 	return ret;
 }
@@ -250,6 +252,9 @@ bool World::ParseCommand(vector<string>& args) {
 		else if (Same(args[0], "loot") || Same(args[0], "lt")) {
 			player->Loot(args);
 		}
+		else if (Same(args[0], "use") ) {
+			player->Use(args);
+		}
 		else ret = false;
 		break;
 	case 4:
@@ -267,6 +272,9 @@ bool World::ParseCommand(vector<string>& args) {
 		}
 		else if (Same(args[0], "transform") || Same(args[0], "tra")) {
 			player->Transform(args);
+		}
+		else if (Same(args[0], "use")) {
+			player->Use(args);
 		}
 		else ret = false;
 		break;

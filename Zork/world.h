@@ -26,6 +26,9 @@ private:
 	clock_t tick_timer;
 	vector<Entity*> entities;
 	Player* player;
+
+public:
+	bool game_complete = false;
 };
 
 #endif //__World__
