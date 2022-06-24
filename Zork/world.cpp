@@ -45,6 +45,9 @@ World::World() {
 	laboratory_to_exterior->exit_type = KEY;
 	Exit* laboratory_to_hallway		= new Exit("west", "east", "Blue corridor", hallway, laboratory);
 	Exit* hallway_to_assembly		= new Exit("down", "up", "Stairs", assembly_room, hallway);
+	hallway_to_assembly->locked = true;
+	hallway_to_assembly->exit_type = CODE;
+	hallway_to_assembly->code = "0451";
 	Exit* hallway_to_engineering	= new Exit("west", "east", "Yellow corridor", engineering_room, hallway);
 	Exit* engineering_to_reactor	= new Exit("north", "south", "Reinforced glass door", reactor_room, engineering_room);
 	engineering_to_reactor->locked = true;
@@ -124,6 +127,7 @@ World::World() {
 	staff->min_value = 6;
 	staff->max_value = 12;
 	animar->AutoEquip();
+	Item* note = new Item("Note", "A note that says:\n    To all the members of the assembly staff,\n    Always remember our motto:\n    Zero accidents.\n    Four members.\n    Five tools.\n    One goal to accomplish.\n\n    Signed: Management.", spawn);
 
 	entities.push_back(glowdust);
 	entities.push_back(machine);
