@@ -14,8 +14,6 @@ int main() {
 	vector<string> args;
 	args.reserve(10);
 
-	string hero_name;
-
 	cout << BLUE_ "Welcome to Blue Mesa!" _OFF << endl;
 	cout << "--------------------" << endl;
 
@@ -39,6 +37,11 @@ int main() {
 				cout << key;
 			}
 			else Tokenize(player_input, args);
+		}
+
+		if (!my_world.IsPlayerAlive()) {
+			cout << endl << RED_ "You died!" _OFF << endl;
+			break;
 		}
 
 		if (args.size() > 0 && Same(args[0], "quit")) break;

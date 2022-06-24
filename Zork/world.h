@@ -20,6 +20,7 @@ public:
 	bool Tick(vector<string>& args);
 	bool ParseCommand(vector<string>& args);
 	void GameLoop();
+	bool IsPlayerAlive();
 
 private:
 	clock_t tick_timer;

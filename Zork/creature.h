@@ -46,6 +46,7 @@ public:
 	Creature* combat_target;
 	Item* weapon;
 	Item* armour;
+	int base_strength = 0;
 
 	string dialog = "";
 };

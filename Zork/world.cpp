@@ -62,12 +62,15 @@ World::World() {
 	Creature* professor = new Creature("Professor", "Professor Ficus is a curious individual. He is a scholar in mythobeast studies.", laboratory);
 	professor->hit_points = 5;
 	professor->dialog = "Cloud!\nThis is bad, we have accidentally summoned one of the mythobeasts, Animar!\nWe need to capture it, or else it will destroy our installations.\nMaybe you could look for a metal frame and a biochip and build our latest prototype for capturing mythobeasts.\nPlease, help us! You are our only hope.\nAnimar is on the exterior of the installations, north from here.";
-
 	Creature* spawn = new Creature("Spawn", "One of Animar's spawn, a minion.", hallway);
 	spawn->hit_points = 10;
+	Creature* animar = new Creature("Animar", "Animar, Soul of Elements.\nA powerful mythobeast that can shape the elements around it.\nYou feel an unknown pressure coming from its presence.", exterior);
+	animar->hit_points = 99;
+	animar->dialog = "Perish, mortal.";
 
 	entities.push_back(professor);
 	entities.push_back(spawn);
+	entities.push_back(animar);
 
 	// Items
 	Item* glowdust	= new Item("Glowdust", "A strange yellow-ish dust that generates light.", recovery_room);
@@ -103,7 +106,7 @@ World::World() {
 	burner->component1 = glowdust;
 	burner->component2 = bottle;
 	burner->combination_result = potion;
-	Item* shield	= new Item("Shield", "A round, metal shield with a star in the middle. Looks like it can deflect any attack.", invisible_room);
+	Item* shield	= new Item("Shield", "A round, metal shield with a star in the middle. Looks like it can deflect any attack.", invisible_room, ARMOUR);
 	shield->min_value = 5;
 	shield->max_value = 10;
 	forge->transformable = vibranium;
@@ -113,6 +116,14 @@ World::World() {
 	assembler->component2 = biochip;
 	assembler->combination_result = mythocube;
 	Item* photo		= new Item("Photo", "A family picture. Depicts the professor and their beautiful wife and children.", professor);
+	Item* claws		= new Item("Claws", "Sharp claws that can cut through metal.", spawn, WEAPON);
+	claws->min_value = 2;
+	claws->max_value = 3;
+	spawn->AutoEquip();
+	Item* staff = new Item("Staff", "A powerful staff that can summon the power of the elements.", animar, WEAPON);
+	staff->min_value = 6;
+	staff->max_value = 12;
+	animar->AutoEquip();
 
 	entities.push_back(glowdust);
 	entities.push_back(machine);
@@ -135,6 +146,8 @@ World::World() {
 	entities.push_back(assembler);
 	entities.push_back(mythocube);
 	entities.push_back(photo);
+	entities.push_back(claws);
+	entities.push_back(staff);
 
 	// Player
 	player = new Player("Cloud", "You are a soldier assigned to protect these installations with your life.", recovery_room);
@@ -268,4 +281,8 @@ bool World::ParseCommand(vector<string>& args) {
 	}
 
 	return ret;
+}
+
+bool World::IsPlayerAlive() {
+	return player->IsAlive();
 }
